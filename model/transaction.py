@@ -28,7 +28,7 @@ class Transaction(Entity):
         return {
             "id": self.id,
             "source_account_id": self.source_account.id,
-            "target_account": self.target_account.id,
+            "target_account_id": self.target_account.id,
             "amount": self.amount,
-            "timestamp": self.timestamp,
+            "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
         }
