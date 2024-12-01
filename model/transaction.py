@@ -20,3 +20,6 @@ class Transaction(Entity):
 
     def __str__(self) -> str:
         return f"{self.timestamp} | {self.source_account} -> {self.target_account} : {self.amount}"
+
+    def __repr__(self) -> str:
+        return self.__str__()
