@@ -54,9 +54,7 @@ def main():
                 )
             )
 
-    # print_in_lines(circular_transactions)
-
-    print("Multiple devices per account:\n")
+    transactions += circular_transactions
 
     # przypisanie urządzeń
     for i in range(len(accounts)):
@@ -77,6 +75,26 @@ def main():
         print(f"{device} assigned to accounts: {accounts_with_device}")
 
     print("\n")
+
+    # stworzenie clusterów kont (communities detection)
+    COMMUNITIES_MAX_SIZE = 10
+    NUM_OF_COMMUNITIES = 10
+    for _ in range(NUM_OF_COMMUNITIES):
+        community_size = random.randint(2, COMMUNITIES_MAX_SIZE)
+        community_accounts = random.sample(accounts, community_size)
+        for _ in range(2 * len(community_accounts)):
+            source_account = random.choice(community_accounts)
+            target_account = random.choice(community_accounts)
+            while target_account == source_account:
+                target_account = random.choice(community_accounts)
+            transactions.append(
+                Transaction(
+                    source_account,
+                    target_account,
+                    round(random.uniform(0.01, 10000), 2),
+                    faker.date_time_this_year(),
+                )
+            )
 
     write_to_csv(accounts, "accounts.csv")
     write_to_csv(
