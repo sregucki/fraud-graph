@@ -19,7 +19,7 @@ class Transaction(Entity):
         self.timestamp = timestamp
 
     def __str__(self) -> str:
-        return f"{self.timestamp} | {self.source_account} -> {self.target_account} : {self.amount}"
+        return f"{self.timestamp} | from=({self.source_account}) -> to({self.target_account}) : {self.amount}"
 
     def __repr__(self) -> str:
         return self.__str__()
