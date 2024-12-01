@@ -17,3 +17,11 @@ class Account(Entity):
 
     def __eq__(self, other):
         return self.id == other.id
+
+    def to_dict(self) -> dict[str, str]:
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+            "device_id": self.device.id if self.device else None,
+        }

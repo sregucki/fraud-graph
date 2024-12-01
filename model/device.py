@@ -10,3 +10,6 @@ class Device(Entity):
 
     def __repr__(self):
         return self.__str__()
+
+    def to_dict(self) -> dict[str, str]:
+        return {"id": self.id}
