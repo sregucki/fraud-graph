@@ -7,7 +7,7 @@ faker = Faker()
 
 
 def gen_accounts(n: int) -> list[Account]:
-    return [Account(faker.name(), faker.email()) for _ in range(n)]
+    return [Account(name=faker.name(), email=faker.email()) for _ in range(n)]
 
 
 def gen_devices(n: int) -> list[Device]:
