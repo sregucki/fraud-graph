@@ -1,0 +1,4 @@
+black
+faker
+pandas
+shortuuid
