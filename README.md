@@ -1,5 +1,11 @@
 # Fraud Detection Graph
 
+## Copy CSV files to neo4j/import
+
+```bash
+sudo cp data/*.csv ./neo4j/import/
+```
+
 ## Commands for creating the graph
 ```cypher
 LOAD CSV WITH HEADERS FROM 'file:///accounts.csv' AS row FIELDTERMINATOR ','
