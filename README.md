@@ -1,5 +1,13 @@
 # Fraud Detection Graph
 
+## Requirements
+ - Docker
+ - Python 3
+ - Git LFS
+ - Bash
+
+UNIX systems only!
+
 ## Copy CSV files to neo4j/import
 
 ```bash
