@@ -5,18 +5,19 @@ URI = "bolt://localhost:7687"
 
 
 def main():
-    example_query()
+    print(multiple_accounts_one_device())
 
 
-def example_query():
-    driver = GraphDatabase.driver(URI, auth=("neo4j", "neo4j"))
-    query_create = "CREATE (n:Person {name: 'Alice'})"
-    query_match = "MATCH (n:Person) RETURN n.name"
-    delete_query = "MATCH (n) DETACH DELETE n"
-    run_query(driver, query_create)
-    result = run_query(driver, query_match)
-    run_query(driver, delete_query)
-    print(result)
+def multiple_accounts_one_device():
+    driver = GraphDatabase.driver(URI, auth=None)
+    query = """
+    MATCH (:Account)-[r:LOGGED_ON]->(d:Device)
+    WITH d, count(r) as rel_count
+    WHERE rel_count > 1
+    RETURN d;
+    """
+    result = run_query(driver, query)
+    return result
 
 
 def run_query(driver, query):
