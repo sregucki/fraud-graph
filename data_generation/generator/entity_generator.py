@@ -1,9 +1,7 @@
-from faker import Faker
-
 from model.account import Account
 from model.device import Device
 
-faker = Faker()
+from data_generation.utilities.faker import faker
 
 
 def gen_accounts(n: int) -> list[Account]:
