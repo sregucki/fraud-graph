@@ -1,5 +1,9 @@
 import random
 
+from data_generation.generator.entity_generator import (
+    gen_accounts,
+    gen_accounts_in_country,
+)
 from data_generation.model.account import Account
 from data_generation.model.transaction import Transaction
 from data_generation.utilities.faker import faker
@@ -14,9 +18,7 @@ def __get_random_accounts_pair(accounts: list[Account]) -> tuple[Account, Accoun
     return accounts[source_account_idx], accounts[target_account_idx]
 
 
-def gen_normal_transactions(
-    accounts: list[Account], quantity: int
-) -> list[Transaction]:
+def gen_normal_transactions(accounts: list[Account], n: int) -> list[Transaction]:
     return [
         Transaction(
             *__get_random_accounts_pair(accounts),
@@ -25,23 +27,23 @@ def gen_normal_transactions(
             ),  # losowa kwota z przedziału 0.01 - 10000
             faker.date_time_this_year(),
         )
-        for _ in range(quantity)
+        for _ in range(n)
     ]
 
 
 def gen_circular_transactions(
-    accounts: list[Account], quantity: int, min_cycle_length: int, max_cycle_length
+    accounts: list[Account], n: int, min_cycle_length: int, max_cycle_length
 ) -> list[Transaction]:
     """
     :param accounts:
-    :param quantity:
+    :param n:
     :param min_cycle_length: minimalna ilość transakcji w pętli
     :param max_cycle_length: maksymalna ilość transakcji w pętli
     :return:
     """
     circular_transactions = []
-    print(f"Generated {quantity} circular transactions: ")
-    for _ in range(quantity):
+    print(f"Generated {n} circular transactions: ")
+    for _ in range(n):
         loop_size = random.randint(min_cycle_length, max_cycle_length)
         accounts_loop = random.sample(accounts, loop_size)
         loop = "["
@@ -64,18 +66,18 @@ def gen_circular_transactions(
 
 def gen_transactions_with_communities(
     accounts: list[Account],
-    quantity: int,
+    n: int,
     community_max_size: int,
 ) -> list[Transaction]:
     """
     :param accounts:
-    :param quantity:
+    :param n:
     :param community_max_size: maksymalna ilość kont w społeczności (grupy transakcji pomiędzy kontami)
     :return:
     """
-    print(f"Generated {quantity} communities: ")
+    print(f"Generated {n} communities: ")
     transactions = []
-    for _ in range(quantity):
+    for _ in range(n):
         community_accounts = random.sample(
             accounts,
             random.randint(
@@ -96,3 +98,29 @@ def gen_transactions_with_communities(
         )
         transactions += community_transactions
     return transactions
+
+
+def gen_multi_transactions_to_acc_outside_country(
+    n: int,
+) -> tuple[list[Account], list[Transaction]]:
+    transactions = []
+    accounts = []
+    print(f"Generated {n} multi-transactions to single accounts outside the country: ")
+    for _ in range(n):
+        target_account = gen_accounts(1)[0]  # mogą się wygenerować te same kraje
+        source_accounts = gen_accounts_in_country(random.randint(3, 8), faker.country())
+        print(
+            f"Multi-transaction to accountId={target_account.id} ({target_account.location.country}) ({target_account.name}) from accounts located in ({source_accounts[0].location.country}) : {[f'accountId={account.id} ({account.name})' for account in source_accounts]}"
+        )
+        for source_account in source_accounts:
+            transactions.append(
+                Transaction(
+                    source_account,
+                    target_account,
+                    round(random.uniform(0.01, 10000), 2),
+                    faker.date_time_this_year(),
+                )
+            )
+        accounts += source_accounts
+        accounts.append(target_account)
+    return accounts, transactions

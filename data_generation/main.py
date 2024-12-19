@@ -5,6 +5,7 @@ from data_generation.generator.transactions_generator import (
     gen_normal_transactions,
     gen_circular_transactions,
     gen_transactions_with_communities,
+    gen_multi_transactions_to_acc_outside_country,
 )
 from data_generation.utilities.entity_csv_writer import write_to_csv
 from generator.entity_generator import gen_accounts, gen_devices
@@ -20,6 +21,7 @@ NUM_DEVICES_WITH_MULTIPLE_ACCOUNTS = 10
 MAX_DEVICES_PER_ACCOUNT = 5
 COMMUNITIES_MAX_SIZE = 10
 NUM_OF_COMMUNITIES = 10
+NUM_OF_MULTI_TRANSACTIONS_OUTSIDE_COUNTRY = 10
 
 
 def main():
@@ -28,15 +30,23 @@ def main():
     devices = gen_devices(NUM_DEVICES)
 
     # generowanie "normalnych" transakcji
-    transactions = gen_normal_transactions(accounts=accounts, quantity=NUM_TRANSACTIONS)
+    transactions = gen_normal_transactions(accounts=accounts, n=NUM_TRANSACTIONS)
 
     # dodawanie transakcji w pętlach (circular transactions) | początek i koniec pętli to samo konto, pozostałe to najczęściej słupy
     transactions += gen_circular_transactions(
         accounts=accounts,
-        quantity=NUM_CIRCULAR_TRANSACTIONS,
+        n=NUM_CIRCULAR_TRANSACTIONS,
         min_cycle_length=3,
         max_cycle_length=8,
     )
+
+    print("\n")
+    multi_transactions_outside_country = gen_multi_transactions_to_acc_outside_country(
+        NUM_OF_MULTI_TRANSACTIONS_OUTSIDE_COUNTRY
+    )
+
+    accounts += multi_transactions_outside_country[0]
+    transactions += multi_transactions_outside_country[1]
 
     print("\n")
     # przypisywanie tych samych urządzeń do wielu kont
