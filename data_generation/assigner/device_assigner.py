@@ -1,5 +1,6 @@
 import random
 
+from data_generation.generator.entity_generator import gen_devices
 from data_generation.model.account import Account
 from data_generation.model.device import Device
 
@@ -17,6 +18,8 @@ def assign_single_device_to_multiple_accounts(
     :param max_devices_per_account: maksymalna liczba kont, do których zostanie przypisane jedno urządzenie
     :return:
     """
+    if len(accounts) > len(devices):
+        devices += gen_devices(len(accounts) - len(devices))
     print("Assigning single devices to multiple accounts:")
     for i in range(
         len(accounts)
