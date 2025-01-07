@@ -11,7 +11,7 @@ def import_query():
     driver = GraphDatabase.driver(URI, auth=None)
     query_accounts = """
     LOAD CSV WITH HEADERS FROM 'file:///accounts.csv' AS row FIELDTERMINATOR ','
-    CREATE (acc: Account {id: row.id, name: row.name, email: row.email})-[r:LOGGED_ON]->(dev: Device {id: row.device_id})
+    CREATE (acc: Account {id: row.id, name: row.name, email: row.email, country: row.country, city: row.city, street_address: row.street_address})-[r:LOGGED_ON]->(dev: Device {id: row.device_id})
     """
     query_transactions = """
     LOAD CSV WITH HEADERS FROM 'file:///transactions.csv' AS row FIELDTERMINATOR ','
