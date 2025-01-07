@@ -7,24 +7,27 @@ from data_generation.generator.transactions_generator import (
     gen_transactions_with_communities,
     gen_multi_transactions_to_acc_outside_country,
 )
+from data_generation.log_collection.log_collector import clear_previous_logs
 from data_generation.utilities.entity_csv_writer import write_to_csv
 from generator.entity_generator import gen_accounts, gen_devices
 
 
 NUM_ACCOUNTS = 200
 NUM_DEVICES = 200
-NUM_TRANSACTIONS = 2000  # liczba "normalnych" transakcji
+NUM_TRANSACTIONS = 1000  # liczba "normalnych" transakcji
 NUM_CIRCULAR_TRANSACTIONS = (
     30  # liczba transakcji "cyklicznych" (w pętlach) np. konto A -> B -> C -> A
 )
 NUM_DEVICES_WITH_MULTIPLE_ACCOUNTS = 10
 MAX_DEVICES_PER_ACCOUNT = 5
 COMMUNITIES_MAX_SIZE = 10
-NUM_OF_COMMUNITIES = 10
+NUM_OF_COMMUNITIES = 5
 NUM_OF_MULTI_TRANSACTIONS_OUTSIDE_COUNTRY = 10
 
 
 def main():
+    clear_previous_logs()
+
     # generowanie kont i urządzeń
     accounts = gen_accounts(NUM_ACCOUNTS)
     devices = gen_devices(NUM_DEVICES)
@@ -50,12 +53,12 @@ def main():
 
     print("\n")
     # przypisywanie tych samych urządzeń do wielu kont
-    assign_single_device_to_multiple_accounts(
+    devices += assign_single_device_to_multiple_accounts(
         accounts, devices, NUM_DEVICES_WITH_MULTIPLE_ACCOUNTS, MAX_DEVICES_PER_ACCOUNT
     )
 
     print("\n")
-    # stworzenie clusterów kont (communities detection)
+    # stworzenie clustrów kont (communities detection)
     transactions += gen_transactions_with_communities(
         accounts, NUM_OF_COMMUNITIES, COMMUNITIES_MAX_SIZE
     )
