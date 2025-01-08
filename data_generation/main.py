@@ -8,6 +8,7 @@ from data_generation.generator.transactions_generator import (
     gen_multi_transactions_to_acc_outside_country,
 )
 from data_generation.log_collection.log_collector import clear_previous_logs
+from data_generation.utilities.device_filter import filter_unused_devices
 from data_generation.utilities.entity_csv_writer import write_to_csv
 from generator.entity_generator import gen_accounts, gen_devices
 
@@ -62,6 +63,8 @@ def main():
     transactions += gen_transactions_with_communities(
         accounts, NUM_OF_COMMUNITIES, COMMUNITIES_MAX_SIZE
     )
+
+    devices = filter_unused_devices(devices=devices, accounts=accounts)
 
     write_to_csv(accounts, "accounts.csv")
     write_to_csv(
