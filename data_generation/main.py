@@ -1,6 +1,7 @@
 from data_generation.assigner.device_assigner import (
     assign_single_device_to_multiple_accounts,
 )
+from data_generation.generator.device_generator import gen_devices
 from data_generation.generator.transactions_generator import (
     gen_normal_transactions,
     gen_circular_transactions,
@@ -10,7 +11,7 @@ from data_generation.generator.transactions_generator import (
 from data_generation.log_collection.log_collector import clear_previous_logs
 from data_generation.utilities.device_filter import filter_unused_devices
 from data_generation.utilities.entity_csv_writer import write_to_csv
-from generator.entity_generator import gen_accounts, gen_devices
+from generator.accounts_generator import gen_accounts
 
 
 NUM_ACCOUNTS = 200

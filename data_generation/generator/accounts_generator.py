@@ -1,5 +1,4 @@
 from model.account import Account
-from model.device import Device
 
 from data_generation.model.location import Location
 from data_generation.utilities.faker import faker
@@ -25,7 +24,3 @@ def gen_accounts_in_country(n: int, country: str) -> list[Account]:
         )
         for _ in range(n)
     ]
-
-
-def gen_devices(n: int) -> list[Device]:
-    return [Device() for _ in range(n)]

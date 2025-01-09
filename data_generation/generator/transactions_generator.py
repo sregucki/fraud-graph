@@ -1,6 +1,6 @@
 import random
 
-from data_generation.generator.entity_generator import (
+from data_generation.generator.accounts_generator import (
     gen_accounts,
     gen_accounts_in_country,
 )

@@ -1,6 +1,6 @@
 import random
 
-from data_generation.generator.entity_generator import gen_devices
+from data_generation.generator.device_generator import gen_devices
 from data_generation.log_collection.log_collector import collect_log
 from data_generation.model.account import Account
 from data_generation.model.device import Device

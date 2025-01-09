@@ -4,8 +4,8 @@ URI = "bolt://localhost:7687"
 
 
 def main():
+    clear_db()
     import_query()
-    # clear_db()
 
 
 def clear_db():
@@ -20,7 +20,7 @@ def import_query():
     driver = GraphDatabase.driver(URI, auth=None)
     create_devices = """
     LOAD CSV WITH HEADERS FROM 'file:///devices.csv' AS row FIELDTERMINATOR ','
-    MERGE (dev: Device {id: row.id})
+    MERGE (dev: Device {id: row.id, name: row.name})
     """
     create_accounts = """
     LOAD CSV WITH HEADERS FROM 'file:///accounts.csv' AS row FIELDTERMINATOR ','
