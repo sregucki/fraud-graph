@@ -14,17 +14,17 @@ from data_generation.utilities.entity_csv_writer import write_to_csv
 from generator.accounts_generator import gen_accounts
 
 
-NUM_ACCOUNTS = 200
-NUM_DEVICES = 200
-NUM_TRANSACTIONS = 1000  # liczba "normalnych" transakcji
+NUM_ACCOUNTS = 50
+NUM_DEVICES = 50
+NUM_TRANSACTIONS = 50  # liczba "normalnych" transakcji
 NUM_CIRCULAR_TRANSACTIONS = (
-    30  # liczba transakcji "cyklicznych" (w pętlach) np. konto A -> B -> C -> A
+    10  # liczba transakcji "cyklicznych" (w pętlach) np. konto A -> B -> C -> A
 )
-NUM_DEVICES_WITH_MULTIPLE_ACCOUNTS = 10
+NUM_DEVICES_WITH_MULTIPLE_ACCOUNTS = 5
 MAX_DEVICES_PER_ACCOUNT = 5
-COMMUNITIES_MAX_SIZE = 10
+COMMUNITIES_MAX_SIZE = 7
 NUM_OF_COMMUNITIES = 5
-NUM_OF_MULTI_TRANSACTIONS_OUTSIDE_COUNTRY = 10
+NUM_OF_MULTI_TRANSACTIONS_OUTSIDE_COUNTRY = 5
 
 
 def main():
